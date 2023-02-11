@@ -48,10 +48,10 @@ const accidentalReportPrint = Vue.component('accidentalReportPrint', {
                                         <tr>
                                             <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.vehicle_reg_no }}</td>
                                             <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.type_of_accident }}</td>
-                                            <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.reason_of_accident }}</td>
+                                            <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.reason_of_accident.replace( /(<([^>]+)>)/ig, '') }}</td>
                                             <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.accident_category }}</td>
-                                            <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.corrective_measure_or_root_case }}</td>
-                                            <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.comments }}</td>
+                                            <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.corrective_measure_or_root_case.replace( /(<([^>]+)>)/ig, '') }}</td>
+                                            <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.comments.replace( /(<([^>]+)>)/ig, '') }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

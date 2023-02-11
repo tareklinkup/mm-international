@@ -575,9 +575,12 @@ $route['get_mother_api_content'] = 'Administrator/Page/getMotherApiContent';
 $route['add_vehicle'] = 'Administrator/Vehicle';
 $route['save_vehicle'] = 'Administrator/Vehicle/add_vehicle';
 $route['get_vehicle'] = 'Administrator/Vehicle/get_vehicle';
+$route['get_all_vehicles'] = 'Administrator/Vehicle/get_all_vehicles';
 $route['get_vehicle_license'] = 'Administrator/Vehicle/get_vehicle_license'; 
 $route['update_vehicle'] = 'Administrator/Vehicle/update_vehicle';
-$route['delete_vehicle'] = 'Administrator/Vehicle/delete_vehicle';
+$route['delete_vehicle'] = 'Administrator/Vehicle/delete_vehicle';    
+$route['inactive_vehicle'] = 'Administrator/Vehicle/inactive_vehicle';    
+$route['active_vehicle'] = 'Administrator/Vehicle/active_vehicle';  
 // service entry
 // $route['service-entry'] = 'Administrator/Vehicle/serviceEntry';
 // $route['save-vehicle-service'] = 'Administrator/Vehicle/saveVehicleService';

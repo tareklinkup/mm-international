@@ -97,6 +97,22 @@ class vehicle extends CI_Controller
         $vehicle = $this->db->query("SELECT * FROM tbl_vehicle WHERE status = 'a' and branch_id = ? $clause", $this->brunch)->result();
 
         echo json_encode($vehicle);
+    } 
+    
+    public function get_all_vehicles()
+    {
+        $data = json_decode($this->input->raw_input_stream);
+        $clause = '';
+        // if ((isset($data->dateFrom) && $data->dateFrom != '') && (isset($data->dateTo) && $data->dateTo != '')) {
+        //     $clause .= " and vl.date between '$data->dateFrom' and '$data->dateTo'";
+        // }
+        if (isset($data->vehicle_id) && $data->vehicle_id != '') {
+            $clause .= " and vehicle_id = '$data->vehicle_id'";
+        }
+
+        $vehicle = $this->db->query("SELECT * FROM tbl_vehicle WHERE status != 'd' and branch_id = ? $clause", $this->brunch)->result();
+
+        echo json_encode($vehicle);
     }
 
 
@@ -227,7 +243,40 @@ class vehicle extends CI_Controller
         }
 
         echo json_encode($res);
-    }
+    } 
+
+    public function inactive_vehicle()
+    {
+        $res = ['success' => false, 'message' => ''];
+        $vehicle = json_decode($this->input->raw_input_stream);
+
+        try {
+            $this->db->set(['status' => 'i'])->where(['vehicle_id' => $vehicle->vehicle_id, 'branch_id' => $this->brunch])->update('tbl_vehicle');
+
+            $res = ['success' => true, 'message' => 'vehicle Inactive successfully'];
+        } catch (Exception $ex) {
+            $res = ['success' => false, 'message' => $ex->getMessage()];
+        }
+
+        echo json_encode($res);
+    }  
+    
+    public function active_vehicle()
+    {
+        $res = ['success' => false, 'message' => ''];
+        $vehicle = json_decode($this->input->raw_input_stream);
+
+        try {
+            $this->db->set(['status' => 'a'])->where(['vehicle_id' => $vehicle->vehicle_id, 'branch_id' => $this->brunch])->update('tbl_vehicle');
+
+            $res = ['success' => true, 'message' => 'vehicle Active successfully'];
+        } catch (Exception $ex) {
+            $res = ['success' => false, 'message' => $ex->getMessage()];
+        }
+
+        echo json_encode($res);
+    } 
+    
     // end vehicle part
     // .....................................................................................................
     // // start service update part
@@ -550,7 +599,9 @@ class vehicle extends CI_Controller
         }
 
         $services = $this->db->query(
-            "SELECT gs.date, 
+            "SELECT 
+            gs.general_service_id,
+            gs.date, 
             gs.start_date, 
             gs.end_date, 
             gs.comments, 
@@ -821,7 +872,7 @@ class vehicle extends CI_Controller
     public function licenseExpairReminderList(){
            
         $now = date('Y-m-d');
-        $search_date = date("Y-m-d", strtotime($now. ' + 15 days'));
+        //$search_date = date("Y-m-d", strtotime($now. ' + 15 days'));
 
         $license = $this->db->query("SELECT 
                         vl.registration_expire_date,
@@ -833,11 +884,11 @@ class vehicle extends CI_Controller
                         FROM tbl_vehicle_license vl
                         left join tbl_vehicle v on v.vehicle_id = vl.vehicle_id
                         WHERE vl.status = 'a'
-                        and (vl.registration_expire_date between '$now' and '$search_date')
-                        or (vl.roadPermit_expire_date between '$now' and '$search_date')
-                        or (vl.fitness_expire_date between '$now' and '$search_date')
-                        or (vl.taxToken_expire_date between '$now' and '$search_date')
-                        or (vl.insurance_expire_date between '$now' and '$search_date')
+                        and vl.roadPermit_expire_date <= '$now'
+                        or vl.registration_expire_date <= '$now'
+                        or vl.fitness_expire_date <= '$now'
+                        or vl.taxToken_expire_date <= '$now'
+                        or vl.insurance_expire_date <= '$now'
                         and vl.branch_id = ?", $this->brunch)->result();
 
                         $license = array_map(function($key, $trn) use ($now){

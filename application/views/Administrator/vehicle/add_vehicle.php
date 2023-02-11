@@ -266,10 +266,34 @@
                         <td>{{ veh.ownership_details }}</td>
                         <td>{{ veh.oparator }}</td>  -->
                             <td>{{ row.tyre_size }}</td>
+                            <td>
+                                <span v-if="row.status == 'a'" class="label label-sm label-info arrowed arrowed-righ"
+                                    title="Active">
+                                    Active
+                                </span>
+                                <span v-if="row.status == 'i'" class="label label-sm label-danger arrowed arrowed-righ"
+                                    title="Deactive">
+                                    Inactive
+                                </span>
+                            </td>
                             <td> <a href="" title="Edit Vehicle" @click.prevent="editVehicle(row)"><i
                                         class="fa fa-pencil"></i></a>&nbsp;
                                 <a href="" class="button" @click.prevent="deleteVehicle(row.vehicle_id )"><i
                                         class="fa fa-trash"></i></a>
+
+                                <a class="red" href="#" v-if="row.status == 'a'"
+                                    onclick="return confirm('Are you sure you want to deactive this Vehecle?');"
+                                    title="Deactive" @click.prevent="inactiveVehicle(row.vehicle_id )">
+                                    <i class="ace-icon fa fa-arrow-circle-down bigger-130"></i>
+                                </a>
+
+                                <a class="green" href="#" v-if="row.status == 'i'"
+                                    onclick="return confirm('Are you sure you want to active this Vehecle?');"
+                                    title="Active" @click.prevent="activeVehicle(row.vehicle_id )">
+                                    <i class="ace-icon fa fa-arrow-circle-up bigger-130"></i>
+                                </a>
+
+
                             </td>
                             <!-- <td>{{ veh.type }}</td>
                         <td>{{ veh.type_details }}</td>
@@ -360,6 +384,11 @@ new Vue({
                     align: 'center'
                 },
                 {
+                    label: 'Status',
+                    field: 'status',
+                    align: 'center'
+                },
+                {
                     label: 'Action',
                     align: 'center',
                     filterable: false
@@ -376,7 +405,7 @@ new Vue({
     },
     methods: {
         getVehicle() {
-            axios.get('/get_vehicle').then(res => {
+            axios.get('/get_all_vehicles').then(res => {
                 this.vehicles = res.data;
             })
         },
@@ -551,6 +580,38 @@ new Vue({
                 return;
             }
             axios.post('/delete_vehicle', {
+                vehicle_id: id
+            }).then(res => {
+                let r = res.data;
+                alert(r.message);
+                if (r.success) {
+                    this.getVehicle();
+                }
+            })
+        },
+
+        inactiveVehicle(id) {
+            let inactive = confirm('Are Your Sure to Inactive the Vehecle?');
+            if (inactive == false) {
+                return;
+            }
+            axios.post('/inactive_vehicle', {
+                vehicle_id: id
+            }).then(res => {
+                let r = res.data;
+                alert(r.message);
+                if (r.success) {
+                    this.getVehicle();
+                }
+            })
+        },
+
+        activeVehicle(id) {
+            let active = confirm('Are Your Sure to Active the Vehecle?');
+            if (active == false) {
+                return;
+            }
+            axios.post('/active_vehicle', {
                 vehicle_id: id
             }).then(res => {
                 let r = res.data;

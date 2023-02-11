@@ -46,18 +46,28 @@ input[type="file"] {
             <div class="table-responsive" id="reportContent">
                 <datatable :columns="columns" :data="vehicleLicense" :filter-by="filter">
                     <template scope="{ row }">
-                        <tr>
+                        <tr style="text-align:center">
                             <td>{{ row.vehicle_reg_no }}</td>
                             <td>{{ row.registration_expire_date }}</td>
-                            <td> <span class="badge badge-success"> {{ row.reg_remain_day }} Days </span> </td>
+                            <td> <span :style="{background: row.reg_remain_day >= 0 ? 'green' : 'red' }"
+                                    style="color:white; border-radius:3px; padding:2px 4px; ">
+                                    {{ row.reg_remain_day }} Days </span> </td>
                             <td>{{ row.roadPermit_expire_date }}</td>
-                            <td> <span class="badge badge-success">{{ row.road_remain_day }} Days</span> </td>
+                            <td> <span :style="{background: row.road_remain_day >= 0 ? 'green' : 'red' }"
+                                    style="color:white; border-radius:3px; padding:2px 4px; ">{{ row.road_remain_day }}
+                                    Days</span> </td>
                             <td>{{ row.fitness_expire_date }}</td>
-                            <td> <span class="badge badge-success"> {{ row.fitness_remain_day }}Days </span></td>
+                            <td> <span :style="{background: row.fitness_remain_day >= 0 ? 'green' : 'red' }"
+                                    style="color:white; border-radius:3px; padding:2px 4px; ">
+                                    {{ row.fitness_remain_day }}Days </span></td>
                             <td>{{ row.taxToken_expire_date }}</td>
-                            <td> <span class="badge badge-success"> {{ row.taxToken_remain_day }} Days </span> </td>
+                            <td> <span :style="{background: row.taxToken_remain_day >= 0 ? 'green' : 'red' }"
+                                    style="color:white; border-radius:3px; padding:2px 4px; ">
+                                    {{ row.taxToken_remain_day }} Days </span> </td>
                             <td>{{ row.insurance_expire_date }}</td>
-                            <td> <span class="badge badge-success"> {{ row.insurance_remain_day }} Days </span> </td>
+                            <td> <span :style="{background: row.insurance_remain_day >= 0 ? 'green' : 'red' }"
+                                    style="color:white; border-radius:3px; padding:2px 4px; ">
+                                    {{ row.insurance_remain_day }} Days </span> </td>
                         </tr>
                     </template>
                 </datatable>

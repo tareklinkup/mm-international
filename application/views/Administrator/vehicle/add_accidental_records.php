@@ -1,63 +1,63 @@
 <style>
-    .saveBtn {
-        padding: 7px 22px;
-        background-color: #00acb5 !important;
-        border-radius: 2px !important;
-        border: none;
-    }
+.saveBtn {
+    padding: 7px 22px;
+    background-color: #00acb5 !important;
+    border-radius: 2px !important;
+    border: none;
+}
 
-    .v-select {
-        margin-bottom: 5px;
-    }
+.v-select {
+    margin-bottom: 5px;
+}
 
-    .v-select .dropdown-toggle {
-        padding: 0px;
-    }
+.v-select .dropdown-toggle {
+    padding: 0px;
+}
 
-    .v-select input[type=search],
-    .v-select input[type=search]:focus {
-        margin: 0px;
-        height: 28px;
-    }
+.v-select input[type=search],
+.v-select input[type=search]:focus {
+    margin: 0px;
+    height: 28px;
+}
 
-    .v-select .vs__selected-options {
-        overflow: hidden;
-        flex-wrap: nowrap;
-    }
+.v-select .vs__selected-options {
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
 
-    .v-select .selected-tag {
-        margin: 2px 0px;
-        white-space: nowrap;
-        position: absolute;
-        left: 0px;
-    }
+.v-select .selected-tag {
+    margin: 2px 0px;
+    white-space: nowrap;
+    position: absolute;
+    left: 0px;
+}
 
-    .v-select .vs__actions {
-        margin-top: -5px;
-    }
+.v-select .vs__actions {
+    margin-top: -5px;
+}
 
-    .v-select .dropdown-menu {
-        width: auto;
-        overflow-y: auto;
-    }
+.v-select .dropdown-menu {
+    width: auto;
+    overflow-y: auto;
+}
 
-    #branchDropdown .vs__actions button {
-        display: none;
-    }
+#branchDropdown .vs__actions button {
+    display: none;
+}
 
-    #branchDropdown .vs__actions .open-indicator {
-        height: 15px;
-        margin-top: 7px;
-    }
+#branchDropdown .vs__actions .open-indicator {
+    height: 15px;
+    margin-top: 7px;
+}
 
-    label.control-label {
-        text-align: right;
-    }
+label.control-label {
+    text-align: right;
+}
 
-    input[type="text"],
-    input[type="date"] {
-        padding: 14px 7px;
-    }
+input[type="text"],
+input[type="date"] {
+    padding: 14px 7px;
+}
 </style>
 
 <div id="requisition" class="row">
@@ -120,10 +120,14 @@
                                     <div class="col-sm-8">
                                         <div class="row">
                                             <div class="col-xs-11 col-sm-10" style="padding-right: 0;">
-                                                <v-select v-bind:options="vehicles" v-model="selectedVehicle" label="vehicle_reg_no" placeholder="Select Vehciles"></v-select>
+                                                <v-select v-bind:options="vehicles" v-model="selectedVehicle"
+                                                    label="vehicle_reg_no" placeholder="Select Vehciles"></v-select>
                                             </div>
                                             <div class="col-xs-1 col-sm-2" style="text-align: right;">
-                                                <a href="<?= base_url('add_vehicle') ?>" class="btn btn-xs btn-danger" style=" height: 29px; border: 0; width: 26px; margin-left: -15px;" target="_blank" title="Add New Product"><i class="fa fa-plus" aria-hidden="true" style="margin-top: 7px;"></i></a>
+                                                <a href="<?= base_url('add_vehicle') ?>" class="btn btn-xs btn-danger"
+                                                    style=" height: 29px; border: 0; width: 26px; margin-left: -15px;"
+                                                    target="_blank" title="Add New Product"><i class="fa fa-plus"
+                                                        aria-hidden="true" style="margin-top: 7px;"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -133,13 +137,15 @@
                                 <div class="form-group clearfix">
                                     <label class="col-sm-4 control-label no-padding-right"> Type of Accidents :</label>
                                     <div class="col-sm-8">
-                                        <input type="text" placeholder="Type of Accidents" v-model="record.type_of_accident" class="form-control" required>
+                                        <input type="text" placeholder="Type of Accidents"
+                                            v-model="record.type_of_accident" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
                                     <label class="col-sm-4 control-label no-padding-right"> Accident Category :</label>
                                     <div class="col-sm-8">
-                                        <select v-model="record.accident_category" class="form-control" required style="padding: 0px 5px;height: 29px;border-radius: 4px;">
+                                        <select v-model="record.accident_category" class="form-control" required
+                                            style="padding: 0px 5px;height: 29px;border-radius: 4px;">
                                             <option value="" selected disabled>Select---</option>
                                             <option value="light">Light</option>
                                             <option value="medium">Medium</option>
@@ -160,13 +166,42 @@
                                     <tbody>
                                         <tr>
                                             <td style="padding: 0px;">
-                                                <textarea placeholder="Reason of Accidents" class="form-control" v-model="record.reason_of_accident" rows="10" cols="30" required></textarea>
+                                                <!-- <textarea placeholder="Reason of Accidents" class="form-control"
+                                                    v-model="record.reason_of_accident" rows="10" cols="30"
+                                                    required></textarea> -->
+                                                <template>
+                                                    <div>
+                                                        <mc-wysiwyg v-model="record.reason_of_accident" :height="150">
+                                                        </mc-wysiwyg>
+                                                    </div>
+                                                </template>
                                             </td>
                                             <td style="padding: 0px;">
-                                                <textarea placeholder="Corrective Measure/ Root Case Analysis " class="form-control" v-model="record.corrective_measure_or_root_case" rows="10" cols="30" required></textarea>
+                                                <!-- <textarea placeholder="Corrective Measure/ Root Case Analysis "
+                                                    class="form-control"
+                                                    v-model="record.corrective_measure_or_root_case" rows="10" cols="30"
+                                                    required></textarea> -->
+
+                                                <template>
+                                                    <div>
+                                                        <mc-wysiwyg v-model="record.corrective_measure_or_root_case"
+                                                            :height="150">
+                                                        </mc-wysiwyg>
+                                                    </div>
+                                                </template>
                                             </td>
                                             <td style="padding: 0px;">
-                                                <textarea v-model="record.comments" class="form-control" cols="30" rows="10" placeholder="Comments.." required></textarea>
+                                                <!-- <textarea v-model="record.comments" class="form-control" cols="30"
+                                                    rows="10" placeholder="Comments.." required></textarea> -->
+
+                                                <template>
+                                                    <div>
+                                                        <mc-wysiwyg v-model="record.comments" :height="150">
+                                                        </mc-wysiwyg>
+                                                    </div>
+                                                </template>
+
+
                                             </td>
                                         </tr>
                                     </tbody>
@@ -251,130 +286,132 @@
 <script src="<?php echo base_url(); ?>assets/js/vue/axios.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/vue/vue-select.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+<script src="https://unpkg.com/@mycure/vue-wysiwyg/dist/mc-wysiwyg.js"></script>
 
 <script>
-    Vue.component('v-select', VueSelect.VueSelect);
-    new Vue({
-        el: '#requisition',
-        data() {
-            return {
-                record: {
-                    accidental_record_id: '<?php echo $id; ?>',
-                    record_date: moment().format('YYYY-MM-DD'),
-                    vehicle_id: '',
-                    type_of_accident: '',
-                    accident_category: '',
-                    reason_of_accident: '',
-                    corrective_measure_or_root_case: '',
-                    comments: '',
-                },
-                accRecords: [],
-                vehicles: [],
-                selectedVehicle: null,
-            }
-        },
-        created() {
-            this.getVehicle();
-            if (this.record.accidental_record_id != '') {
-                this.editRecord();
-            }
-            // this.getAccidentalRecord();
-        },
-        methods: {
-            getVehicle() {
-                axios.get('/get_vehicle').then(res => {
-                    this.vehicles = res.data;
-                })
+Vue.component('v-select', VueSelect.VueSelect);
+Vue.use(McWysiwyg.default);
+new Vue({
+    el: '#requisition',
+    data() {
+        return {
+            record: {
+                accidental_record_id: '<?php echo $id; ?>',
+                record_date: moment().format('YYYY-MM-DD'),
+                vehicle_id: '',
+                type_of_accident: '',
+                accident_category: '',
+                reason_of_accident: '',
+                corrective_measure_or_root_case: '',
+                comments: '',
             },
-            // getAccidentalRecord() {
-            //     axios.get('/get-accidental-record').then(res => {
-            //         this.accRecords = res.data;
-            //     })
-            // },
-            clearFrom() {
-                this.record = {
-                    accidental_record_id: '',
-                    record_date: moment().format('YYYY-MM-DD'),
-                    vehicle_id: '',
-                    type_of_accident: '',
-                    accident_category: '',
-                    reason_of_accident: '',
-                    corrective_measure_or_root_case: '',
-                    comments: '',
-                };
-                this.selectedVehicle = null;
-            },
-            saveRecord() {
-                if (this.selectedVehicle == null) {
-                    alert('Select a Vehicle please.')
-                    return;
+            accRecords: [],
+            vehicles: [],
+            selectedVehicle: null,
+        }
+    },
+    created() {
+        this.getVehicle();
+        if (this.record.accidental_record_id != '') {
+            this.editRecord();
+        }
+        // this.getAccidentalRecord();
+    },
+    methods: {
+        getVehicle() {
+            axios.get('/get_vehicle').then(res => {
+                this.vehicles = res.data;
+            })
+        },
+        // getAccidentalRecord() {
+        //     axios.get('/get-accidental-record').then(res => {
+        //         this.accRecords = res.data;
+        //     })
+        // },
+        clearFrom() {
+            this.record = {
+                accidental_record_id: '',
+                record_date: moment().format('YYYY-MM-DD'),
+                vehicle_id: '',
+                type_of_accident: '',
+                accident_category: '',
+                reason_of_accident: '',
+                corrective_measure_or_root_case: '',
+                comments: '',
+            };
+            this.selectedVehicle = null;
+        },
+        saveRecord() {
+            if (this.selectedVehicle == null) {
+                alert('Select a Vehicle please.')
+                return;
+            } else {
+                this.record.vehicle_id = this.selectedVehicle.vehicle_id;
+            }
+
+            let url = '/save-accidental-record';
+            if (this.record.accidental_record_id != 0) {
+                url = '/update-accidental-record';
+            }
+
+            // console.log(this.record);
+            // return;
+
+            axios.post(url, this.record).then(res => {
+                if (res.data.success) {
+                    alert(res.data.message);
+                    let conf = confirm('Do you want to view record?')
+                    if (conf) {
+                        window.open('/accidental_print/' + res.data.id);
+                    }
+                    // this.getAccidentalRecord();
+                    // location.reload();
+                    this.clearFrom();
                 } else {
-                    this.record.vehicle_id = this.selectedVehicle.vehicle_id;
+                    alert('Ops! Something going wrong! try again later')
                 }
+            })
+        },
+        editRecord() {
+            let id = this.record.accidental_record_id;
+            axios.post('/get-accidental-record', {
+                accidental_record_id: id
+            }).then(res => {
+                result = res.data[0];
 
-                let url = '/save-accidental-record';
-                if (this.record.accidental_record_id != 0) {
-                    url = '/update-accidental-record';
-                }
+                this.record.accidental_record_id = result.accidental_record_id;
+                this.record.record_date = result.record_date;
+                this.record.vehicle_id = result.vehicle_id;
+                this.record.type_of_accident = result.type_of_accident;
+                this.record.accident_category = result.accident_category;
+                this.record.reason_of_accident = result.reason_of_accident;
+                this.record.corrective_measure_or_root_case = result.corrective_measure_or_root_case;
+                this.record.comments = result.comments;
 
-                // console.log(this.record);
-                // return;
-
-                axios.post(url, this.record).then(res => {
-                    if (res.data.success) {
-                        alert(res.data.message);
-                        let conf = confirm('Do you want to view record?')
-                        if (conf) {
-                            window.open('/accidental_print/' + res.data.id);
-                        }
-                        // this.getAccidentalRecord();
-                        // location.reload();
-                        this.clearFrom();
-                    } else {
-                        alert('Ops! Something going wrong! try again later')
+                this.vehicles.forEach(ele => {
+                    if (ele.vehicle_id == result.vehicle_id) {
+                        this.selectedVehicle = ele;
                     }
                 })
-            },
-            editRecord() {
-                let id = this.record.accidental_record_id;
-                axios.post('/get-accidental-record', {
-                    accidental_record_id: id
-                }).then(res => {
-                    result = res.data[0];
 
-                    this.record.accidental_record_id = result.accidental_record_id;
-                    this.record.record_date = result.record_date;
-                    this.record.vehicle_id = result.vehicle_id;
-                    this.record.type_of_accident = result.type_of_accident;
-                    this.record.accident_category = result.accident_category;
-                    this.record.reason_of_accident = result.reason_of_accident;
-                    this.record.corrective_measure_or_root_case = result.corrective_measure_or_root_case;
-                    this.record.comments = result.comments;
+            })
+        },
+        // deleteRecord(id) {
+        //     let deleteConfirm = confirm('Are Your Sure to delete the item?');
+        //     if (deleteConfirm == false) {
+        //         return;
+        //     }
+        //     axios.post('/delete-accidental-record', {
+        //         accidental_record_id: id
+        //     }).then(res => {
+        //         let r = res.data;
+        //         alert(r.message);
+        //         if (r.success) {
+        //             this.getAccidentalRecord();
+        //         }
+        //     })
+        // },
+    }
 
-                    this.vehicles.forEach(ele => {
-                        if (ele.vehicle_id == result.vehicle_id) {
-                            this.selectedVehicle = ele;
-                        }
-                    })
-
-                })
-            },
-            // deleteRecord(id) {
-            //     let deleteConfirm = confirm('Are Your Sure to delete the item?');
-            //     if (deleteConfirm == false) {
-            //         return;
-            //     }
-            //     axios.post('/delete-accidental-record', {
-            //         accidental_record_id: id
-            //     }).then(res => {
-            //         let r = res.data;
-            //         alert(r.message);
-            //         if (r.success) {
-            //             this.getAccidentalRecord();
-            //         }
-            //     })
-            // },
-        }
-
-    });
+});
 </script>
