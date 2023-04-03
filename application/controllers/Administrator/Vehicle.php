@@ -97,8 +97,8 @@ class vehicle extends CI_Controller
         $vehicle = $this->db->query("SELECT * FROM tbl_vehicle WHERE status = 'a' and branch_id = ? $clause", $this->brunch)->result();
 
         echo json_encode($vehicle);
-    } 
-    
+    }
+
     public function get_all_vehicles()
     {
         $data = json_decode($this->input->raw_input_stream);
@@ -243,7 +243,7 @@ class vehicle extends CI_Controller
         }
 
         echo json_encode($res);
-    } 
+    }
 
     public function inactive_vehicle()
     {
@@ -259,8 +259,8 @@ class vehicle extends CI_Controller
         }
 
         echo json_encode($res);
-    }  
-    
+    }
+
     public function active_vehicle()
     {
         $res = ['success' => false, 'message' => ''];
@@ -275,8 +275,8 @@ class vehicle extends CI_Controller
         }
 
         echo json_encode($res);
-    } 
-    
+    }
+
     // end vehicle part
     // .....................................................................................................
     // // start service update part
@@ -391,7 +391,7 @@ class vehicle extends CI_Controller
 
             $clauses .= " and tyre_id = '$data->tyre_id'";
 
-            	$tyreDetails = $this->db->query("SELECT te.*, v.vehicle_reg_no
+            $tyreDetails = $this->db->query("SELECT te.*, v.vehicle_reg_no
                 FROM tbl_tyre_entry te
                 LEFT JOIN tbl_vehicle v on v.vehicle_id = te.vehicle_id 
                 WHERE te.tyre_id = ?
@@ -404,10 +404,9 @@ class vehicle extends CI_Controller
                 WHERE tyreEntryId = ?", $data->tyre_id)->result();
 
             $res['spare_cart'] = $spareTyres;
-
         }
-    
-            echo json_encode($res);
+
+        echo json_encode($res);
     }
 
     public function saveTyreEntry()
@@ -421,7 +420,7 @@ class vehicle extends CI_Controller
             $data = (array)$dataObj->data;
             unset($data['tyre_id']);
 
-            if($tyreId == ''){
+            if ($tyreId == '') {
                 $data['date']      = date('Y-m-d');
                 $data['status']    = 'a';
                 $data['AddBy']     = $this->session->userdata("userId");
@@ -435,36 +434,34 @@ class vehicle extends CI_Controller
                     $details       = (array)$value;
                     $details['tyreEntryId'] = $tyreEntryId;
                     $details['status']      = 'a';
-    
+
                     $this->db->insert('tbl_tyre_entry_details', $details);
                 }
 
                 $res = ['success' => true, 'message' => 'Data save successfully'];
-
-            }else {
+            } else {
                 $data['date']       = date('Y-m-d');
                 $data['UpdateBy']   = $this->session->userdata("userId");
                 $data['updatetime'] = date('Y-m-d H:i:s');
                 $data['branch_id']  = $this->brunch;
 
-                $this->db->where('tyre_id',$tyreId)->update('tbl_tyre_entry', $data);
+                $this->db->where('tyre_id', $tyreId)->update('tbl_tyre_entry', $data);
 
-                $this->db->where('tyreEntryId',$tyreId)->delete('tbl_tyre_entry_details');
+                $this->db->where('tyreEntryId', $tyreId)->delete('tbl_tyre_entry_details');
 
                 foreach ($dataObj->cart as $key => $value) {
                     $details       = (array)$value;
                     $details['tyreEntryId'] = $tyreId;
                     $details['status']      = 'a';
-    
+
                     $this->db->insert('tbl_tyre_entry_details', $details);
                 }
                 $res = ['success' => true, 'message' => 'Data Update successfully'];
-            } 
-
+            }
         } catch (Exception $ex) {
             $res = ['success' => false, 'message' => $ex->getMessage()];
         }
-        
+
         echo json_encode($res);
     }
 
@@ -472,8 +469,8 @@ class vehicle extends CI_Controller
     {
         $data = json_decode($this->input->raw_input_stream);
 
-        $clause = '';        
-        if (isset($data->vehicle_id) && $data->vehicle_id != ''){
+        $clause = '';
+        if (isset($data->vehicle_id) && $data->vehicle_id != '') {
             $clause .= " and te.vehicle_id = '$data->vehicle_id'";
         }
 
@@ -486,11 +483,11 @@ class vehicle extends CI_Controller
             $clause
         order by tyre_id desc", $this->brunch)->result();
 
-        $result = array_map(function($tyre){
-            $tyre->details = $this->db->query("SELECT * FROM tbl_tyre_entry_details WHERE `tyreEntryId` = ?",$tyre->tyre_id)->result();
+        $result = array_map(function ($tyre) {
+            $tyre->details = $this->db->query("SELECT * FROM tbl_tyre_entry_details WHERE `tyreEntryId` = ?", $tyre->tyre_id)->result();
 
             return $tyre;
-        },$result);
+        }, $result);
 
         echo json_encode($result);
     }
@@ -504,7 +501,7 @@ class vehicle extends CI_Controller
     //     $tyre_id = $tyreObj->data->tyre_id;
     //     $parts_cart =  $tyreObj->parts_cart;
 
-        
+
     //     try {
     //         $data = (array)$tyreObj->data;
     //         // $tyre_cart = json_encode($tyreObj->parts_cart);
@@ -535,7 +532,7 @@ class vehicle extends CI_Controller
     //         }
 
     //         $res = ['success' => true, 'message' => 'Data updated Successfully'];
-            
+
     //     } catch (Exception $ex) {
     //         $res = ['success' => false, 'message' => $ex->getMessage()];
     //         // $res = ['success' => false, 'message' => 'Something going wrong! please try later'];
@@ -590,16 +587,17 @@ class vehicle extends CI_Controller
     public function getAllGeneralService()
     {
         $data = json_decode($this->input->raw_input_stream);
-        $now = date('Y-m-d');
-        $search_date = date("Y-m-d", strtotime($now. ' + 15 days'));
+
         $clause = '';
+        if (isset($data->dateFrom) && $data->dateFrom != '' && isset($data->dateTo) && $data->dateTo != '') {
+            $clause .= " and gs.date between '$data->dateFrom' and '$data->dateTo'";
+        }
 
         if (isset($data->vehicle_id) && $data->vehicle_id != '') {
             $clause .= " and gs.vehicle_id = '$data->vehicle_id'";
         }
 
-        $services = $this->db->query(
-            "SELECT 
+        $services = $this->db->query("SELECT 
             gs.general_service_id,
             gs.date, 
             gs.start_date, 
@@ -608,25 +606,58 @@ class vehicle extends CI_Controller
             v.vehicle_reg_no, 
             gsl.general_service_name
         
-        FROM tbl_general_service gs
-        left join tbl_vehicle v on v.vehicle_id = gs.vehicle_id
-        left join tbl_general_service_list gsl on gsl.id = gs.general_service_list_id
-        WHERE gs.status = 'a' 
-        and gs.end_date between '$now' and '$search_date'
-        and gs.branch_id = ?
-        $clause
-        order by general_service_id desc", $this->brunch)->result();
-
-        $services = array_map(function($key, $trn) use ($now){
-            $now = strtotime($now);
-            $end_date = strtotime($trn->end_date);
-            $datediff = $end_date - $now;
-            $trn->remain_day = round($datediff / (60 * 60 * 24));
-            return $trn;
-        }, array_keys($services), $services);
+            FROM tbl_general_service gs
+            left join tbl_vehicle v on v.vehicle_id = gs.vehicle_id
+            left join tbl_general_service_list gsl on gsl.id = gs.general_service_list_id
+            WHERE gs.status = 'a'
+            and gs.branch_id = ?
+            $clause
+        ", $this->brunch)->result();
 
         echo json_encode($services);
+    }
+
+    public function getAllGeneralServiceRemainder()
+    {
+        $data = json_decode($this->input->raw_input_stream);
+
+        $now = date('Y-m-d');
+        $search_date = date("Y-m-d", strtotime($now . ' + 15 days'));
+
+        $clause = '';
+        if (isset($data->vehicle_id) && $data->vehicle_id != '') {
+            $clause .= " and gs.vehicle_id = '$data->vehicle_id'";
+        }
+
+        $services = $this->db->query("SELECT 
+            gs.general_service_id,
+            gs.date, 
+            gs.start_date, 
+            gs.end_date, 
+            gs.comments, 
+            v.vehicle_reg_no, 
+            gsl.general_service_name
         
+            FROM tbl_general_service gs
+            left join tbl_vehicle v on v.vehicle_id = gs.vehicle_id
+            left join tbl_general_service_list gsl on gsl.id = gs.general_service_list_id
+            WHERE gs.status = 'a'
+            " . ($data->type == "" ? "" : " and gs.end_date between '$now' and '$search_date' ") . "
+            and gs.branch_id = ?
+            $clause
+            " . ($data->type == "" ? "" : " order by gs.general_service_id desc ") . "
+        ", $this->brunch)->result();
+
+        if (isset($data->type) && $data->type == 'remainder') {
+            $services = array_map(function ($key, $trn) use ($now) {
+                $now = strtotime($now);
+                $end_date = strtotime($trn->end_date);
+                $datediff = $end_date - $now;
+                $trn->remain_day = round($datediff / (60 * 60 * 24));
+                return $trn;
+            }, array_keys($services), $services);
+        }
+        echo json_encode($services);
     }
 
     public function getAllGeneralServiceList()
@@ -635,7 +666,7 @@ class vehicle extends CI_Controller
         // $now = date('Y-m-d');
         // $search_date = date("Y-m-d", strtotime($now. ' + 15 days'));
         $clause = '';
-        
+
         if (isset($data->vehicle_id) && $data->vehicle_id != '') {
             $clause .= " and gs.vehicle_id = '$data->vehicle_id'";
         }
@@ -654,8 +685,10 @@ class vehicle extends CI_Controller
         WHERE gs.status = 'a' 
         and gs.branch_id = ?
         $clause
-        order by general_service_id desc", $this->brunch)->result();
-        
+        order by general_service_id desc",
+            $this->brunch
+        )->result();
+
         echo json_encode($services);
     }
 
@@ -869,8 +902,9 @@ class vehicle extends CI_Controller
         $this->load->view('Administrator/index', $data);
     }
 
-    public function licenseExpairReminderList(){
-           
+    public function licenseExpairReminderList()
+    {
+
         $now = date('Y-m-d');
         //$search_date = date("Y-m-d", strtotime($now. ' + 15 days'));
 
@@ -891,40 +925,39 @@ class vehicle extends CI_Controller
                         or vl.insurance_expire_date <= '$now'
                         and vl.branch_id = ?", $this->brunch)->result();
 
-                        $license = array_map(function($key, $trn) use ($now){
-                        $now = strtotime($now);
+        $license = array_map(function ($key, $trn) use ($now) {
+            $now = strtotime($now);
 
-                        //reg_expire_date//
-                        $end_date = strtotime($trn->registration_expire_date);
-                        $datediff = $end_date - $now;
-                        $trn->reg_remain_day = round($datediff / (60 * 60 * 24));
+            //reg_expire_date//
+            $end_date = strtotime($trn->registration_expire_date);
+            $datediff = $end_date - $now;
+            $trn->reg_remain_day = round($datediff / (60 * 60 * 24));
 
-                        //road_expire_date//
-                        $end_date = strtotime($trn->roadPermit_expire_date);
-                        $datediff = $end_date - $now;
-                        $trn->road_remain_day = round($datediff / (60 * 60 * 24));
+            //road_expire_date//
+            $end_date = strtotime($trn->roadPermit_expire_date);
+            $datediff = $end_date - $now;
+            $trn->road_remain_day = round($datediff / (60 * 60 * 24));
 
-                        //fitness_expire_date//
-                        $end_date = strtotime($trn->fitness_expire_date);
-                        $datediff = $end_date - $now;
-                        $trn->fitness_remain_day = round($datediff / (60 * 60 * 24));
+            //fitness_expire_date//
+            $end_date = strtotime($trn->fitness_expire_date);
+            $datediff = $end_date - $now;
+            $trn->fitness_remain_day = round($datediff / (60 * 60 * 24));
 
-                        //tax-token_expire_date//
-                        $end_date = strtotime($trn->taxToken_expire_date);
-                        $datediff = $end_date - $now;
-                        $trn->taxToken_remain_day = round($datediff / (60 * 60 * 24));
+            //tax-token_expire_date//
+            $end_date = strtotime($trn->taxToken_expire_date);
+            $datediff = $end_date - $now;
+            $trn->taxToken_remain_day = round($datediff / (60 * 60 * 24));
 
-                        //tax-token_expire_date//
-                        $end_date = strtotime($trn->insurance_expire_date);
-                        $datediff = $end_date - $now;
-                        $trn->insurance_remain_day = round($datediff / (60 * 60 * 24));
+            //tax-token_expire_date//
+            $end_date = strtotime($trn->insurance_expire_date);
+            $datediff = $end_date - $now;
+            $trn->insurance_remain_day = round($datediff / (60 * 60 * 24));
 
-                        return $trn;
-                        }, array_keys($license), $license);
+            return $trn;
+        }, array_keys($license), $license);
 
-                        echo json_encode($license);
-
-        }
+        echo json_encode($license);
+    }
 
     public function updateVehicleLicense()
     {
@@ -1457,8 +1490,7 @@ class vehicle extends CI_Controller
             $clause .= " and po.purchaseOrder_id = '$data->purchaseOrder_id'";
         }
 
-        if (isset($data->purchaseOrder_id) and $data->purchaseOrder_id != '') 
-        {
+        if (isset($data->purchaseOrder_id) and $data->purchaseOrder_id != '') {
             $res['purchaseOrderDetails'] = $this->db->query("SELECT pod.*,v.vehicle_reg_no,p.Product_Name,
                 (select ifnull(sum(pd.PurchaseDetails_TotalQuantity),0)
                 from tbl_purchasedetails pd
@@ -1587,10 +1619,6 @@ class vehicle extends CI_Controller
 
             echo json_encode($res);
         }
-
-        
-        
-
     }
 
     // public function purchaseOrderEdit($id)
@@ -2246,10 +2274,10 @@ class vehicle extends CI_Controller
             $this->db->trans_begin();
             $data = (array)$maintenanceObj;
             unset($data['maintenance_id ']);
-            $data['status']   = 'a';
-            $data['AddBy']    = $this->session->userdata("userId");
-            $data['AddTime']  = date('Y-m-d H:i:s');
-            $data['branch_id']   = $this->brunch;
+            $data['status']    = 'a';
+            $data['AddBy']     = $this->session->userdata("userId");
+            $data['AddTime']   = date('Y-m-d H:i:s');
+            $data['branch_id'] = $this->brunch;
 
             $this->db->insert('tbl_maintenance', $data);
             $maintenanceId = $this->db->insert_id();
@@ -3074,19 +3102,17 @@ class vehicle extends CI_Controller
     {
         $data = json_decode($this->input->raw_input_stream);
 
-        
+
 
         $clauses = '';
-        if (isset($data->vehicle_id) && $data->vehicle_id != '') 
-        {
+        if (isset($data->vehicle_id) && $data->vehicle_id != '') {
             $clauses .= " and te.vehicle_id = '$data->vehicle_id'";
         }
 
-        if (isset($data->dateFrom) && $data->dateFrom != '' && isset($data->dateTo) && $data->dateTo != '') 
-        {
+        if (isset($data->dateFrom) && $data->dateFrom != '' && isset($data->dateTo) && $data->dateTo != '') {
             $clauses .= " and te.date between '$data->dateFrom' and '$data->dateTo'";
         }
-        
+
         $tyre_details = $this->db->query("SELECT ted.*,te.vehicle_id,te.installation_date,te.expaire_date,te.date,v.vehicle_reg_no,te.comments
         FROM tbl_tyre_entry_details ted
         LEFT JOIN tbl_tyre_entry te on te.tyre_id = ted.tyreEntryId
@@ -3094,8 +3120,8 @@ class vehicle extends CI_Controller
         WHERE te.status = 'a'
         and te.branch_id = ?
         $clauses
-        order by te.tyre_id desc", $this->brunch)->result();        
-                
+        order by te.tyre_id desc", $this->brunch)->result();
+
         // $tyre = $this->db->query("SELECT 
         //     ted.*,
         //     ted.tyre_name,
@@ -3106,6 +3132,6 @@ class vehicle extends CI_Controller
 
         $res['tyre_details'] = $tyre_details;
         // $res['tyre'] = $tyre;
-        echo json_encode($res);                
+        echo json_encode($res);
     }
 }

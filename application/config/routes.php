@@ -576,11 +576,11 @@ $route['add_vehicle'] = 'Administrator/Vehicle';
 $route['save_vehicle'] = 'Administrator/Vehicle/add_vehicle';
 $route['get_vehicle'] = 'Administrator/Vehicle/get_vehicle';
 $route['get_all_vehicles'] = 'Administrator/Vehicle/get_all_vehicles';
-$route['get_vehicle_license'] = 'Administrator/Vehicle/get_vehicle_license'; 
+$route['get_vehicle_license'] = 'Administrator/Vehicle/get_vehicle_license';
 $route['update_vehicle'] = 'Administrator/Vehicle/update_vehicle';
-$route['delete_vehicle'] = 'Administrator/Vehicle/delete_vehicle';    
-$route['inactive_vehicle'] = 'Administrator/Vehicle/inactive_vehicle';    
-$route['active_vehicle'] = 'Administrator/Vehicle/active_vehicle';  
+$route['delete_vehicle'] = 'Administrator/Vehicle/delete_vehicle';
+$route['inactive_vehicle'] = 'Administrator/Vehicle/inactive_vehicle';
+$route['active_vehicle'] = 'Administrator/Vehicle/active_vehicle';
 // service entry
 // $route['service-entry'] = 'Administrator/Vehicle/serviceEntry';
 // $route['save-vehicle-service'] = 'Administrator/Vehicle/saveVehicleService';
@@ -598,15 +598,16 @@ $route['get-general-service-list'] = 'Administrator/Vehicle/getGeneralServiceLis
 $route['general-service-entry'] = 'Administrator/Vehicle/generalServiceEntry';
 $route['save-general-service'] = 'Administrator/Vehicle/saveGeneralService';
 $route['get-all-general-service'] = 'Administrator/Vehicle/getAllGeneralService';
+$route['get-all-general-service-remainder'] = 'Administrator/Vehicle/getAllGeneralServiceRemainder';
 $route['get-all-general-service_list'] = 'Administrator/Vehicle/getAllGeneralServiceList';
 $route['update-general-service'] = 'Administrator/Vehicle/updateGeneralService';
 $route['delete-general-service'] = 'Administrator/Vehicle/deleteGeneralService';
 
 //Tyre Entry Option
-$route['tyre-entry'] = 'Administrator/Vehicle/tyreEntry';  
-$route['save-tyre-entry'] = 'Administrator/Vehicle/saveTyreEntry'; 
-$route['get-tyre-list'] = 'Administrator/Vehicle/getTyreList';  
-$route['update-tyre-entry'] = 'Administrator/Vehicle/updateTyreEntry'; 
+$route['tyre-entry'] = 'Administrator/Vehicle/tyreEntry';
+$route['save-tyre-entry'] = 'Administrator/Vehicle/saveTyreEntry';
+$route['get-tyre-list'] = 'Administrator/Vehicle/getTyreList';
+$route['update-tyre-entry'] = 'Administrator/Vehicle/updateTyreEntry';
 $route['delete-tyre-entry'] = 'Administrator/Vehicle/deleteTyreEntry';
 
 
@@ -615,7 +616,7 @@ $route['license-update'] = 'Administrator/Vehicle/licenseEntry';
 $route['save-vehicle-license'] = 'Administrator/Vehicle/saveVehicleLicense';
 $route['get-vehicle-license'] = 'Administrator/Vehicle/getVehicleLicense';
 //lisence reminder 
-$route['license-expair-reminder'] = 'Administrator/Vehicle/licenseExpairReminder'; 
+$route['license-expair-reminder'] = 'Administrator/Vehicle/licenseExpairReminder';
 $route['license-expair-reminderList'] = 'Administrator/Vehicle/licenseExpairReminderList';
 $route['update-vehicle-license'] = 'Administrator/Vehicle/updateVehicleLicense';
 $route['delete-vehicle-license'] = 'Administrator/Vehicle/deleteVehicleLicense';

@@ -8,9 +8,9 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	
-  	'username' => 'root',
-  	'password' => '',
-  	'database' => 'mminternationaldhk',
+  	'username' => 'dewbxcak',
+  	'password' => 'ET@vey558Zh1Bo',
+  	'database' => 'dewbxcak_mminternationaldhk',
 	
 // 	'username' => 'root',
 // 	'password' => '',

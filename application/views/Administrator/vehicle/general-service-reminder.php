@@ -1,80 +1,80 @@
 <style>
-.table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 5px;
-}
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
 
-.v-select {
-    margin-top: -2.5px;
-    float: right;
-    min-width: 180px;
-    margin-left: 5px;
-}
+    .v-select {
+        margin-top: -2.5px;
+        float: right;
+        min-width: 180px;
+        margin-left: 5px;
+    }
 
-.v-select .dropdown-toggle {
-    padding: 0px;
-    height: 25px;
-}
+    .v-select .dropdown-toggle {
+        padding: 0px;
+        height: 25px;
+    }
 
-.v-select input[type=search],
-.v-select input[type=search]:focus {
-    margin: 0px;
-}
+    .v-select input[type=search],
+    .v-select input[type=search]:focus {
+        margin: 0px;
+    }
 
-.v-select .vs__selected-options {
-    overflow: hidden;
-    flex-wrap: nowrap;
-}
+    .v-select .vs__selected-options {
+        overflow: hidden;
+        flex-wrap: nowrap;
+    }
 
-.v-select .selected-tag {
-    margin: 2px 0px;
-    white-space: nowrap;
-    position: absolute;
-    left: 0px;
-}
+    .v-select .selected-tag {
+        margin: 2px 0px;
+        white-space: nowrap;
+        position: absolute;
+        left: 0px;
+    }
 
-.v-select .vs__actions {
-    margin-top: -5px;
-}
+    .v-select .vs__actions {
+        margin-top: -5px;
+    }
 
-.v-select .dropdown-menu {
-    width: auto;
-    overflow-y: auto;
-}
+    .v-select .dropdown-menu {
+        width: auto;
+        overflow-y: auto;
+    }
 
-#searchForm select {
-    padding: 0;
-    border-radius: 4px;
-}
+    #searchForm select {
+        padding: 0;
+        border-radius: 4px;
+    }
 
-#searchForm .form-group {
-    margin-right: 5px;
-}
+    #searchForm .form-group {
+        margin-right: 5px;
+    }
 
-#searchForm * {
-    font-size: 13px;
-}
+    #searchForm * {
+        font-size: 13px;
+    }
 
-.record-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    .record-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-.record-table thead {
-    background-color: #0097df;
-    color: white;
-}
+    .record-table thead {
+        background-color: #0097df;
+        color: white;
+    }
 
-.record-table th,
-.record-table td {
-    padding: 3px;
-    border: 1px solid #454545;
-}
+    .record-table th,
+    .record-table td {
+        padding: 3px;
+        border: 1px solid #454545;
+    }
 
-.record-table th {
-    text-align: center;
-}
+    .record-table th {
+        text-align: center;
+    }
 </style>
 <div id="purchaseRecord">
     <div class="row" style="border-bottom: 1px solid #ccc;padding: 3px 0;">
@@ -88,8 +88,7 @@
                     </select>
                 </div>
 
-                <div class="form-group" style="display:none;"
-                    v-bind:style="{display: searchType == 'vehicle' ? '' : 'none'}">
+                <div class="form-group" style="display:none;" v-bind:style="{display: searchType == 'vehicle' ? '' : 'none'}">
                     <label>Vehicle</label>
                     <v-select v-bind:options="vehicles" v-model="selectedvehicle" label="vehicle_reg_no"></v-select>
                 </div>
@@ -101,16 +100,14 @@
         </div>
     </div>
 
-    <div class="row" style="margin-top:15px;display:none;"
-        v-bind:style="{display: recordData.length > 0 ? '' : 'none'}">
+    <div class="row" style="margin-top:15px;display:none;" v-bind:style="{display: recordData.length > 0 ? '' : 'none'}">
         <div class="col-xs-12" style="margin-bottom: 10px;">
             <a href="" @click.prevent="print"><i class="fa fa-print"></i> Print</a>
         </div>
         <div class="col-xs-12">
             <div id="reportContent">
                 <h3 style="text-align:center;margin-top: 0px;font-weight:bold">General Service Reminder</h3>
-                <table class="table table-bordered" style="display:none"
-                    v-bind:style="{display: recordData.length > 0 ? '' : 'none'}">
+                <table class="table table-bordered" style="display:none" v-bind:style="{display: recordData.length > 0 ? '' : 'none'}">
                     <thead>
                         <th>SL.</th>
                         <th>Date</th>
@@ -148,48 +145,49 @@
 <script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
 
 <script>
-Vue.component('v-select', VueSelect.VueSelect);
-new Vue({
-    el: '#purchaseRecord',
-    data() {
-        return {
-            searchType: '',
-            vehicles: [],
-            selectedvehicle: null,
-            recordData: [],
-        }
-    },
-    methods: {
-        onChangeSearchType() {
-            if (this.searchType == 'vehicle') {
-                this.getVehicle();
+    Vue.component('v-select', VueSelect.VueSelect);
+    new Vue({
+        el: '#purchaseRecord',
+        data() {
+            return {
+                searchType: '',
+                vehicles: [],
+                selectedvehicle: null,
+                recordData: [],
             }
         },
-        getVehicle() {
-            axios.get('/get_vehicle').then(res => {
-                this.vehicles = res.data;
-            })
-        },
-        getSearchResult() {
-            if (this.searchType == '') {
-                this.selectedvehicle = null;
-            }
-            let filter = {
-                vehicle_id: this.selectedvehicle == null ? '' : this.selectedvehicle.vehicle_id
-            }
+        methods: {
+            onChangeSearchType() {
+                if (this.searchType == 'vehicle') {
+                    this.getVehicle();
+                }
+            },
+            getVehicle() {
+                axios.get('/get_vehicle').then(res => {
+                    this.vehicles = res.data;
+                })
+            },
+            getSearchResult() {
+                if (this.searchType == '') {
+                    this.selectedvehicle = null;
+                }
+                let filter = {
+                    vehicle_id: this.selectedvehicle == null ? '' : this.selectedvehicle.vehicle_id,
+                    type: 'remainder'
+                }
 
-            axios.post("get-all-general-service", filter)
-                .then(res => {
-                    this.recordData = res.data;
-                })
-                .catch(error => {
-                    if (error.response) {
-                        alert(`${error.response.status}, ${error.response.statusText}`);
-                    }
-                })
-        },
-        async print() {
-            let reportContent = `
+                axios.post("get-all-general-service-remainder", filter)
+                    .then(res => {
+                        this.recordData = res.data;
+                    })
+                    .catch(error => {
+                        if (error.response) {
+                            alert(`${error.response.status}, ${error.response.statusText}`);
+                        }
+                    })
+            },
+            async print() {
+                let reportContent = `
 					<div class="container">						
 						<div class="row">
 							<div class="col-xs-12">
@@ -199,12 +197,12 @@ new Vue({
 					</div>
 				`;
 
-            var reportWindow = window.open('', 'PRINT', `height=${screen.height}, width=${screen.width}`);
-            reportWindow.document.write(`
+                var reportWindow = window.open('', 'PRINT', `height=${screen.height}, width=${screen.width}`);
+                reportWindow.document.write(`
 					<?php $this->load->view('Administrator/reports/reportHeader.php'); ?>
 				`);
 
-            reportWindow.document.head.innerHTML += `
+                reportWindow.document.head.innerHTML += `
 					<style>
 						.table {
 							width: 100%;
@@ -229,21 +227,21 @@ new Vue({
 						}
 					</style>
 				`;
-            reportWindow.document.body.innerHTML += reportContent;
+                reportWindow.document.body.innerHTML += reportContent;
 
-            if (this.searchType == '' || this.searchType == 'user') {
-                let rows = reportWindow.document.querySelectorAll('.record-table tr');
-                rows.forEach(row => {
-                    row.lastChild.remove();
-                })
+                if (this.searchType == '' || this.searchType == 'user') {
+                    let rows = reportWindow.document.querySelectorAll('.record-table tr');
+                    rows.forEach(row => {
+                        row.lastChild.remove();
+                    })
+                }
+
+
+                reportWindow.focus();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                reportWindow.print();
+                reportWindow.close();
             }
-
-
-            reportWindow.focus();
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            reportWindow.print();
-            reportWindow.close();
         }
-    }
-})
+    })
 </script>

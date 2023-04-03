@@ -76,8 +76,8 @@
 			<form class="form-inline" id="searchForm" @submit.prevent="getSearchResult">
 				<div class="form-group" style="margin-right: 20px;">
 					<label>Type : </label>
-					<select class="form-control" v-model="searchFor" style="width: 120px;" v-on:input="resData = []">
-						<option value="" disabled selected>Select---</option>
+					<select class="form-control" v-model="searchFor" style="width: 120px;" v-on:input="onChangeType">
+						<option value="" disabled>Select---</option>
 						<option value="washing">Washing</option>
 						<option value="service">Service</option>
 					</select>
@@ -85,7 +85,7 @@
 				<div class="form-group" style="margin-right: 20px;">
 					<label>Month : </label>
 					<select class="form-control" v-model="month" style="width: 120px;">
-						<option value="" disabled selected>Select---</option>
+						<option value="" disabled>Select---</option>
 						<option value="01">January</option>
 						<option value="02">February</option>
 						<option value="03">March</option>
@@ -178,6 +178,9 @@
 			}
 		},
 		methods: {
+			onChangeType() {
+				// this.resData = [];
+			},
 			getSearchResult() {
 				if (this.searchFor == '') {
 					alert('Select a Type')
