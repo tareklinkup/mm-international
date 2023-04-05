@@ -53,11 +53,11 @@ const jobCardPrint = Vue.component('jobCardPrint', {
                                     <tbody>
                                         <tr>
                                             <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.standint_date }}</td>
-                                            <td style="text-align:left;height:490px;vertical-align: top;}">{{ inputData.work_details }}</td>
+                                            <td style="text-align:left;height:490px;vertical-align: top;}"> { inputData.work_details } </td>
                                             <td style="text-align:left;height:490px;vertical-align: top;}">
                                                 <div style="position: relative; height: 100%;">
                                                     <div>{{ inputData.req_spare_parts }}</div>
-                                                    <div style="    position: absolute;
+                                                    <div style=" position: absolute;
                                                     bottom: 0px;
                                                     border-top: 1px solid;
                                                     width: 100%;

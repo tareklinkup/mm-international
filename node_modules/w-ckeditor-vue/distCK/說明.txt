@@ -1,0 +1,6 @@
+
+1.由CKEditor 5官網下載指定套件之編譯版:
+https://ckeditor.com/ckeditor-5/
+https://ckeditor.com/ckeditor-5/download/
+
+2.將由腳本自動gDistRollup自動複製過去dist

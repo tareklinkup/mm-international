@@ -147,17 +147,23 @@
                     <thead>
                         <th>SL.</th>
                         <th>Tyre Name</th>
+                        <th>Vehicle Name</th>
                         <th>New Serial No</th>
                         <th>Old Serial No</th>
-                        <th>Status</th>
+                        <th>Inst. Date</th>
+                        <th>Expire Date</th>
+                        <th>Used Day</th>
                     </thead>
                     <tbody>
                         <tr v-for="(item,index) in tyre_details">
                             <td>{{ ++index}}</td>
                             <td>{{ item.tyre_name}}</td>
+                            <td>{{ item.vehicle_reg_no}}</td>
                             <td>{{ item.new_serial}}</td>
                             <td>{{ item.old_serial}}</td>
-                            <td>{{ item.status}}</td>
+                            <td>{{ item.installation_date}}</td>
+                            <td>{{ item.expaire_date}}</td>
+                            <td>{{ item.usedDays }} Days</td>
                         </tr>
                     </tbody>
                 </table>
@@ -204,7 +210,7 @@ new Vue({
             })
         },
 
-        getSearchResult() {
+        async getSearchResult() {
             if (this.searchType == '') {
                 this.selectedvehicle = null;
             }
@@ -216,11 +222,23 @@ new Vue({
                 dateTo: this.dateTo
             }
 
-            axios.post("get-tyre-report", filter)
+            await axios.post("get-tyre-report", filter)
                 .then(res => {
                     // console.log(res);
                     // this.recordData = res.data.tyre;
-                    this.tyre_details = res.data.tyre_details;
+                    let result = res.data.tyre_details;
+
+
+                    result.forEach(element => {
+                        let date1 = new Date(element.installation_date);
+                        let date2 = new Date();
+                        let difference = date2.getTime() - date1.getTime();
+                        let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+                        element.usedDays = TotalDays;
+                    });
+
+                    this.tyre_details = result;
+
                 })
                 .catch(error => {
                     if (error.response) {

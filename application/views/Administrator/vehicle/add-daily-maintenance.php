@@ -178,29 +178,14 @@ label {
                     <div class="form-group">
                         <label class="control-label col-md-4">Job Details/ Problems:</label>
                         <div class="col-md-8">
-                            <textarea class="form-control" v-model="inputData.job_problems" cols="30"
-                                rows="3"></textarea>
-                            <!-- <template>
-                                <div>
-                                    <mc-wysiwyg v-model="inputData.job_problems" :height="150"></mc-wysiwyg>
-                                </div>
-                            </template> -->
-                            <!-- <ckeditor v-model="inputData.job_problems"> </ckeditor> -->
+
+                            <w-ckeditor-vue v-model="inputData.job_problems" style="width:100%;"> </w-ckeditor-vue>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-4">Job Activity/ Progress:</label>
                         <div class="col-md-8">
-
-                            <textarea class="form-control" v-model="inputData.job_progress" cols="30"
-                                rows="3"></textarea>
-
-                            <!-- <template>
-                                <div>
-                                    <mc-wysiwyg v-model="inputData.job_progress" :height="150"></mc-wysiwyg>
-                                </div>
-                            </template> -->
-
+                            <w-ckeditor-vue v-model="inputData.job_progress" style="width:100%;"> </w-ckeditor-vue>
                         </div>
                     </div>
 
@@ -405,12 +390,14 @@ label {
 <script src="<?php echo base_url(); ?>assets/js/vue/vuejs-datatable.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/vue/vue-select.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
-<!-- <script src="https://unpkg.com/@mycure/vue-wysiwyg/dist/mc-wysiwyg.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@ckeditor/ckeditor5-build-classic@21.0.0/build/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-ckeditor-vue@2.0.4/dist/w-ckeditor-vue.umd.js"></script>
 
 
 <script>
 Vue.component('v-select', VueSelect.VueSelect);
-// Vue.use(McWysiwyg.default);
+Vue.component('w-ckeditor-vue', window['w-ckeditor-vue']);
 
 new Vue({
     el: '#vehicle',
